@@ -48,6 +48,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 
+    // Validar tiempo de envío (honeypot de tiempo)
+    if (empty($errors)) {
+        $minSubmitTime = 10; // Segundos
+        $loadTime = isset($_POST['token']) ? (int)$_POST['token'] : 0;
+        $submitTime = time();
+
+        if (($submitTime - $loadTime) < $minSubmitTime) {
+            // Es un bot, responder con éxito pero no enviar correo.
+            http_response_code(200);
+            echo json_encode(["status" => "success", "message" => "Su mensaje ha sido enviado, le responderemos a la brevedad."]);
+            exit;
+        }
+    }
+
     // Validar y sanitizar entradas
     $name = filter_var(
         trim($_POST["name"] ?? ""),

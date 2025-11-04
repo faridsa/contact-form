@@ -68,9 +68,15 @@
 				required=""
 				></textarea>
 
+				<input
+				type="hidden"
+				name="token"
+				value="<?php echo time(); ?>"
+				/>
+
 				<div
 				class="cf-turnstile"
-				data-sitekey="0x4AAAAAABnPhoag_Ytmi8PW"
+				data-sitekey="PUBLIC_TOKEN"
 				data-theme="light"
 				data-language="es"
 				></div>
